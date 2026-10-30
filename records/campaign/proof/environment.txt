@@ -1,0 +1,15 @@
+KAPPA3_ENVIRONMENT_SNAPSHOT_V1
+entries	12
+E	active_project	/home/xfliu/Workspace/Paper_Jia_Lueling_CR_Constant_3D/Code/Project.toml
+E	blas_config	LBTConfig([ILP64] libopenblas64_.so)
+E	cpu_model	Intel(R) Xeon(R) Gold 5318Y CPU @ 2.10GHz
+E	cpu_threads	96
+E	hostname	liulab-hpc2023
+E	julia_bindir	/home/xfliu/.julia/juliaup/julia-1.12.6+0.x64.linux.gnu/bin
+E	julia_threads	1
+E	julia_version	1.12.6
+E	machine	x86_64-linux-gnu
+E	omp_num_threads	1
+E	openblas_num_threads	1
+E	word_size	64
+END

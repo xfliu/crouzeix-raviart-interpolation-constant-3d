@@ -1,0 +1,26 @@
+name = "Kappa3Certificate"
+uuid = "4c1489c1-2e2f-4e7d-93c4-60a7ad7ec301"
+version = "0.1.0"
+
+[deps]
+Arpack = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
+IntervalArithmetic = "d1acc4aa-44c8-5952-acd4-ba5d80a2a253"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+VFEM = "ec17fd68-d864-437b-9813-4c092c3d0aa1"
+Veigs = "e7a4c6f1-3f8b-4c2d-9a1e-2b8c5f7d9e3a"
+
+[compat]
+Arpack = "0.5.4"
+IntervalArithmetic = "1.0.8"
+VFEM = "0.1"
+Veigs = "0.1"
+julia = "1.12"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

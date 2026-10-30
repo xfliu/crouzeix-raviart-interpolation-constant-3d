@@ -1,0 +1,31 @@
+name = "VFEM"
+uuid = "ec17fd68-d864-437b-9813-4c092c3d0aa1"
+version = "0.1.0-dev"
+authors = ["Xuefeng Liu"]
+
+[deps]
+ArnoldiMethod = "ec485272-7323-5ecc-a04f-4719b315124d"
+Arpack = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+IntervalArithmetic = "d1acc4aa-44c8-5952-acd4-ba5d80a2a253"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+Veigs = "e7a4c6f1-3f8b-4c2d-9a1e-2b8c5f7d9e3a"
+
+[compat]
+ArnoldiMethod = "0.4.0"
+Arpack = "0.5.4"
+DelimitedFiles = "1.9.1"
+IntervalArithmetic = "1.0.8"
+LinearAlgebra = "1.10"
+SparseArrays = "1.10"
+Veigs = "0.1"
+julia = "1.10"
+
+[extras]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["BenchmarkTools", "Random", "Test"]
