@@ -197,7 +197,11 @@ relabellings without pretending that a second eigenproblem was solved.
 
 The guarded `initialize` mode hashes `Project.toml`, `Manifest.toml`, all
 verifier scripts/sources/tests, and the Julia sources and package metadata of
-the locally developed VFEM and Veigs packages. The lower-level
+the VFEM and Veigs packages. `setup.jl` installs these two packages from
+GitHub (`xfliu/vfem` and the `VEIGS.jl` folder of `xfliu/veigs`) at fixed
+commits, and their installation directories are found automatically; the
+environment variables `KAPPA3_VFEM_ROOT` and `KAPPA3_VEIGS_ROOT` override
+them. The lower-level
 `prepare_provenance.jl` helper is retained for format diagnostics but should
 not be mixed with a production campaign. Large and generated files live only under
 `/mnt/ssd2T-2/xfliu/kappa3_cr_constant_3d`, in `checkpoints`, `logs`, `points`,

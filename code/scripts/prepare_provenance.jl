@@ -5,10 +5,8 @@ include(joinpath(code_root, "src", "ProofRecords.jl"))
 using .ProofRecords
 
 scratch_root = get(ENV, "KAPPA3_SCRATCH_ROOT", CANONICAL_SCRATCH_ROOT)
-vfem_root = get(ENV, "KAPPA3_VFEM_ROOT",
-                "/home/xfliu/Workspace/Julia_LIB/Lib/VFEM.jl")
-veigs_root = get(ENV, "KAPPA3_VEIGS_ROOT",
-                 "/home/xfliu/Workspace/Julia_LIB/Lib/Veigs.jl")
+vfem_root = get(ENV, "KAPPA3_VFEM_ROOT", dependency_root("VFEM"))
+veigs_root = get(ENV, "KAPPA3_VEIGS_ROOT", dependency_root("Veigs"))
 
 layout = prepare_scratch_layout(scratch_root)
 fingerprint_path = joinpath(layout.proof, "source-fingerprints.txt")

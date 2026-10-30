@@ -14,10 +14,8 @@ Kappa3Certificate.RigorousSPD.ieee_preflight()
 
 bundle_path = isempty(ARGS) ?
     joinpath(CANONICAL_SCRATCH_ROOT, "proof-bundle.txt") : abspath(only(ARGS))
-vfem_root = get(ENV, "KAPPA3_VFEM_ROOT",
-                "/home/xfliu/Workspace/Julia_LIB/Lib/VFEM.jl")
-veigs_root = get(ENV, "KAPPA3_VEIGS_ROOT",
-                 "/home/xfliu/Workspace/Julia_LIB/Lib/Veigs.jl")
+vfem_root = get(ENV, "KAPPA3_VFEM_ROOT", dependency_root("VFEM"))
+veigs_root = get(ENV, "KAPPA3_VEIGS_ROOT", dependency_root("Veigs"))
 
 bundle = load_proof_bundle(bundle_path)
 artifacts = verify_bundle_artifacts(bundle_path, bundle)

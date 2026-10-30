@@ -60,6 +60,15 @@ Round 4 result: path closes at 0.1598 (340 boxes, 127 refs), 0.155, 0.153
 and **0.1520** (4247 boxes, 337 refs; `cover4_path_t1520.log`).  The 0.1515
 run was stopped on 2026-10-30 by user decision: P* <= 0.1520 suffices.
 
+**v2 rerun 2026-10-30 10:11 JST (GitHub dependencies).** For the public
+repository xfliu/crouzeix-raviart-interpolation-constant-3d, `Code/setup.jl`
+now installs VFEM (xfliu/vfem @ ee15fc7) and Veigs (xfliu/veigs, VEIGS.jl @
+ddd17a2) from GitHub; their sources are byte-identical to the local copies.
+`ProofRecords.dependency_root` finds the installed roots. Since
+`Manifest.toml` is fingerprinted, the campaign was rerun in a fresh root;
+the v1 records are kept at
+`/mnt/ssd2T-2/xfliu/kappa3_cr_constant_3d.v1-localdeps-20261030`.
+
 **PROOF COMPLETE 2026-10-30 02:02 JST**: `proof-bundle.txt` written and the
 independent replay passed (star 799/5000: 274 leaves / 2192 corners; path
 31/200: 1062 leaves / 8496 corners; 319 replayed point proofs).

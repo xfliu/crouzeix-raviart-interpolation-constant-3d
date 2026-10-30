@@ -13,7 +13,7 @@ using ..CoverSearch: AdaptiveSearch, ReferenceOrigin, SearchCell,
 using ..ReferencePlan: ReferenceSeed, CatalogPlan, full_reference_plan,
                        expanded_representations, enrichment_seed,
                        promote_seed, needs_promotion
-using ..ProofRecords: CANONICAL_SCRATCH_ROOT, ScratchLayout,
+using ..ProofRecords: CANONICAL_SCRATCH_ROOT, dependency_root, ScratchLayout,
                       prepare_scratch_layout, collect_standard_fingerprints,
                       save_fingerprints, load_fingerprints,
                       verify_standard_fingerprints, capture_environment,
@@ -44,8 +44,8 @@ const _POINT_FILE_RE = r"^[A-Za-z0-9][A-Za-z0-9_-]*$"
 Base.@kwdef struct ProductionConfig
     code_root::String
     scratch_root::String = CANONICAL_SCRATCH_ROOT
-    vfem_root::String = "/home/xfliu/Workspace/Julia_LIB/Lib/VFEM.jl"
-    veigs_root::String = "/home/xfliu/Workspace/Julia_LIB/Lib/Veigs.jl"
+    vfem_root::String = dependency_root("VFEM")
+    veigs_root::String = dependency_root("Veigs")
     basis::Symbol = :haar
     mesh_strategy::Symbol = :metric
     initial_backoff::Float64 = 1e-4
@@ -883,10 +883,8 @@ function cli_main(args; code_root::AbstractString)
     config = ProductionConfig(
         code_root = abspath(code_root),
         scratch_root = get(ENV, "KAPPA3_SCRATCH_ROOT", CANONICAL_SCRATCH_ROOT),
-        vfem_root = get(ENV, "KAPPA3_VFEM_ROOT",
-                        "/home/xfliu/Workspace/Julia_LIB/Lib/VFEM.jl"),
-        veigs_root = get(ENV, "KAPPA3_VEIGS_ROOT",
-                         "/home/xfliu/Workspace/Julia_LIB/Lib/Veigs.jl"),
+        vfem_root = get(ENV, "KAPPA3_VFEM_ROOT", dependency_root("VFEM")),
+        veigs_root = get(ENV, "KAPPA3_VEIGS_ROOT", dependency_root("Veigs")),
     )
     if mode == :status
         inspect_status(config)

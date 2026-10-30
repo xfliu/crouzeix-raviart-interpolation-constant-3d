@@ -6,7 +6,8 @@ using LinearAlgebra
 using SparseArrays
 import Kappa3Certificate
 
-export CANONICAL_SCRATCH_ROOT, ScratchLayout, prepare_scratch_layout,
+export dependency_root,
+       CANONICAL_SCRATCH_ROOT, ScratchLayout, prepare_scratch_layout,
        FileDigest, FingerprintRecord, collect_standard_fingerprints,
        save_fingerprints, load_fingerprints, verify_standard_fingerprints,
        EnvironmentSnapshot, capture_environment, save_environment,
@@ -320,6 +321,20 @@ function _digest_tree!(entries, prefix::String, root::AbstractString,
         path = joinpath(root, rel)
         push!(entries, FileDigest(joinpath(prefix, rel), sha256_file(path), filesize(path)))
     end
+end
+
+"""
+    dependency_root(name)
+
+Installation directory of the package `name` in the active environment, for
+example the checkout of VFEM or Veigs that `Pkg` installed from GitHub.
+"""
+function dependency_root(name::AbstractString)
+    id = Base.identify_package(name)
+    isnothing(id) && throw(ArgumentError("package $name is not in the active environment"))
+    entry = Base.locate_package(id)
+    isnothing(entry) && throw(ArgumentError("package $name is not installed"))
+    return dirname(dirname(entry))
 end
 
 """

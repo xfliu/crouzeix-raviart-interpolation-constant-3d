@@ -2,17 +2,15 @@ using Pkg
 
 Pkg.activate(@__DIR__)
 
-vfem_path = get(ENV, "VFEM_PATH", "/home/xfliu/Workspace/Julia_LIB/Lib/VFEM.jl")
-veigs_path = get(ENV, "VEIGS_PATH", "/home/xfliu/Workspace/Julia_LIB/Lib/Veigs.jl")
-
-# Develop both unregistered local packages in one resolution transaction.  If
-# they are added one at a time, Pkg tries to resolve the still-unregistered
-# companion dependency before its path is known.
-Pkg.develop([
-    PackageSpec(path = veigs_path),
-    PackageSpec(path = vfem_path),
+# VFEM and Veigs are installed from GitHub at the exact commits used for the
+# proof records.  Both are added in one transaction because neither package
+# is registered.
+Pkg.add([
+    PackageSpec(url = "https://github.com/xfliu/veigs", subdir = "VEIGS.jl",
+                rev = "ddd17a23758252ca59ef9190bde62729f390237d"),
+    PackageSpec(url = "https://github.com/xfliu/vfem",
+                rev = "ee15fc7872714151010cb197a2ef958ed2322241"),
 ])
-Pkg.resolve()
 Pkg.instantiate()
 Pkg.precompile()
 

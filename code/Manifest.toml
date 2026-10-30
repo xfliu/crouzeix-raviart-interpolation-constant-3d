@@ -624,7 +624,9 @@ version = "1.11.0"
 
 [[deps.VFEM]]
 deps = ["ArnoldiMethod", "Arpack", "DelimitedFiles", "IntervalArithmetic", "LinearAlgebra", "SparseArrays", "Veigs"]
-path = "/home/xfliu/Workspace/Julia_LIB/Lib/VFEM.jl"
+git-tree-sha1 = "88b0030201b95576121d33f1e513ad987f7c97d4"
+repo-rev = "ee15fc7872714151010cb197a2ef958ed2322241"
+repo-url = "https://github.com/xfliu/vfem"
 uuid = "ec17fd68-d864-437b-9813-4c092c3d0aa1"
 version = "0.1.0-dev"
 
@@ -653,7 +655,10 @@ version = "0.6.1"
 
 [[deps.Veigs]]
 deps = ["Arpack", "BenchmarkTools", "Ferrite", "IntervalArithmetic", "KrylovKit", "LDLFactorizations", "LinearAlgebra", "Random", "SparseArrays", "Test"]
-path = "/home/xfliu/Workspace/Julia_LIB/Lib/Veigs.jl"
+git-tree-sha1 = "1ee611ff86ce1f68589b2164ef84812a0ca38ed5"
+repo-rev = "ddd17a23758252ca59ef9190bde62729f390237d"
+repo-subdir = "VEIGS.jl"
+repo-url = "https://github.com/xfliu/veigs"
 uuid = "e7a4c6f1-3f8b-4c2d-9a1e-2b8c5f7d9e3a"
 version = "0.1.0-dev"
 

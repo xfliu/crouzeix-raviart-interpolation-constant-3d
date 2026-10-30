@@ -30,28 +30,105 @@ program rechecks every record.
 
 | Directory | Content |
 |---|---|
-| `code/` | Julia package `Kappa3Certificate`: Crouzeix–Raviart upper bounds with a verified eigenvalue lower bound, Gram-box comparison, adaptive covers, proof records and replay (`scripts/replay_proof.jl`). See `code/README.md`. |
+| `code/` | Julia package `Kappa3Certificate`: Crouzeix–Raviart upper bounds with a verified eigenvalue lower bound, Gram-box comparison, adaptive covers, proof records and replay. See `code/README.md`. |
 | `lowerbound/` | Julia project `BernsteinLB`: certified lower bounds $C(K)\ge L_M$ from exact-rational Bernstein trial functions, plus the batch scripts and input lists of the experiments (`RUNBOOK.md`). |
-| `deps/` | Snapshots of the two dependencies used in the run, [VFEM.jl](https://github.com/xfliu/vfem) and [Veigs.jl](https://github.com/xfliu/veigs) (MIT licensed). |
+| `examples/` | Small scripts for one shape or one box (see the quick start). |
 | `records/campaign/` | The proof: `proof-bundle.txt`, the 210 point records (`points/`), the reference index, the star and path cover records, source fingerprints and the computing environment, all linked by SHA-256 digests. `queue.log` is the run log. |
 | `records/aux/` | Tables of the auxiliary computations in Appendix D: calibration (`exp1`), samples (`exp2`), equal-angle stars (`diag`, `small`), lower bounds at the reference points, and the pilot catalogues. |
 | `records/make_figures.py` | Regenerates the Appendix D figures from these tables. |
 
-## Replaying the proof
+The two dependencies are installed from GitHub at the commits used for the
+proof: [VFEM.jl](https://github.com/xfliu/vfem) and
+[Veigs.jl](https://github.com/xfliu/veigs) (the `VEIGS.jl` folder).
 
-The campaign ran on Linux with Julia 1.12.6, single-threaded:
-`JULIA_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1`.
+## Setup
+
+You need Julia 1.12; the records were produced with 1.12.6 on Linux.
 
 ```bash
-cd code
-julia --project=. -e 'using Pkg; Pkg.instantiate()'
-env JULIA_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
-  KAPPA3_VFEM_ROOT=../deps/VFEM.jl KAPPA3_VEIGS_ROOT=../deps/Veigs.jl \
-  julia --startup-file=no --project=. scripts/replay_proof.jl \
-  ../records/campaign/proof-bundle.txt
+git clone https://github.com/xfliu/crouzeix-raviart-interpolation-constant-3d
+cd crouzeix-raviart-interpolation-constant-3d
+julia --project=code code/setup.jl
+julia --project=lowerbound -e 'using Pkg; Pkg.instantiate()'
 ```
 
-A successful replay ends with
+`code/setup.jl` installs VFEM and Veigs from GitHub, exactly as recorded in
+`code/Manifest.toml`.
+
+Run everything single-threaded, as in the proof:
+
+```bash
+export JULIA_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+```
+
+## Quick start: one shape or one box
+
+Angles are in degrees.
+
+* A **star** is given by the three angles $(\alpha,\beta,\gamma)$ between
+  three unit edges at a common vertex.
+* A **path** is given by $(\theta_1,\theta_2,\varphi)$: the angles $\theta_1$
+  and $\theta_2$ between consecutive unit edges of the chain $A\!-\!B\!-\!C\!-\!D$,
+  and the dihedral angle $\varphi$ about $BC$.
+
+### Upper bound for one shape
+
+This runs the Crouzeix–Raviart computation with a verified eigenvalue lower
+bound. `KAPPA3_LEVEL` is the number of red refinements; the proof uses level
+5, that is 32768 cells.
+
+```bash
+KAPPA3_FAMILY=star KAPPA3_PARAMETERS=10,10,10 KAPPA3_LEVEL=5 \
+  julia --project=code code/scripts/point_certificate.jl
+```
+
+The output ends with `C(K) <= 0.1590973283688650...`. Level 5 takes from
+about 20 seconds to a few minutes. For a quick test use `KAPPA3_LEVEL=3`,
+which gives the weaker bound `C(K) <= 0.16699...` in a few seconds.
+
+### Lower bound for one shape
+
+This is a certified Bernstein trial function of degree $M$, which defaults to 10.
+
+```bash
+julia --project=lowerbound examples/point_lower.jl star 10 10 10
+# certified lower bound C(K) >= 0.158549577082   (a few seconds)
+julia --project=lowerbound examples/point_lower.jl path 30 60 16.220114224037754
+```
+
+### Upper bound on a whole box of shapes
+
+This uses the 210 stored reference bounds of the proof and the eight-corner
+Gram comparison.
+
+```bash
+julia --project=code examples/box_bound.jl star 0 1.875 0 1.875 0 1.875
+# C(K) <= 0.159774 for every feasible shape in the box
+# certified with reference S001 (relabelling 123)
+
+julia --project=code examples/box_bound.jl path 30 37.5 45 52.5 0 11.25
+# C(K) <= 0.153773 ...
+```
+
+The arguments are `FAMILY lo1 hi1 lo2 hi2 lo3 hi3`, and the endpoints must be
+dyadic, such as 60/2^k. The script finds, to six decimals, the smallest
+bound that some stored reference certifies on the box, so a large box may
+need splitting. To use a single reference, set `BOX_REFERENCE=S001`.
+
+The corner tests are recomputed rigorously. The reference bounds themselves
+are read from `records/campaign/points`; the full replay below recomputes them.
+
+## Replaying the whole proof
+
+```bash
+julia --startup-file=no --project=code code/scripts/replay_proof.jl \
+  records/campaign/proof-bundle.txt
+```
+
+The replay first checks the SHA-256 fingerprints of all sources, including
+the installed VFEM and Veigs, against `records/campaign/proof/source-fingerprints.txt`.
+It then recomputes all 319 reference bounds, which takes about 1.5 hours on
+one core, and all 2192 + 8496 corner tests. It ends with
 
 ```
 KAPPA3 PROOF REPLAY PASSED
@@ -60,18 +137,6 @@ KAPPA3 PROOF REPLAY PASSED
   star retained leaves/corners: 274/2192
   path retained leaves/corners: 1062/8496
 ```
-
-The replay recomputes all 319 reference bounds, which takes about 1.5 hours
-on one core. It also checks the SHA-256 fingerprints of the source files
-against `records/campaign/proof/source-fingerprints.txt`.
-
-**Note on paths.** The committed `Manifest.toml` files refer to the two
-dependencies by their paths on the original machine:
-`/home/xfliu/Workspace/Julia_LIB/Lib/VFEM.jl` and
-`/home/xfliu/Workspace/Julia_LIB/Lib/Veigs.jl`. The manifests are part of
-the fingerprinted sources, so do not edit them. Instead, copy or symlink
-`deps/VFEM.jl` and `deps/Veigs.jl` to these two paths before running the
-commands above.
 
 ## License
 
