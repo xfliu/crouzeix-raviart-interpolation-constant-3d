@@ -36,6 +36,7 @@ program rechecks every record.
 | `records/campaign/` | The proof: `proof-bundle.txt`, the 210 point records (`points/`), the reference index, the star and path cover records, source fingerprints and the computing environment, all linked by SHA-256 digests. `queue.log` is the run log. |
 | `records/aux/` | Tables of the auxiliary computations in Appendix D: calibration (`exp1`), samples (`exp2`), equal-angle stars (`diag`, `small`), lower bounds at the reference points, and the pilot catalogues. |
 | `records/make_figures.py` | Regenerates the Appendix D figures from these tables. |
+| `records/reduction_example/` | Scripts and data for the figure illustrating the proof of Proposition 4.1 (two tetrahedra stretched into the path and star families; see its README). |
 
 The two dependencies are installed from GitHub at the commits used for the
 proof: [VFEM.jl](https://github.com/xfliu/vfem) and
