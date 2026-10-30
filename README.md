@@ -2,8 +2,8 @@
 
 Code and proof records for the paper
 
-> L. Jia and X. Liu, *Guaranteed estimation of the Crouzeix–Raviart
-> interpolation constant on tetrahedra*.
+> L. Jia and X. Liu, *Guaranteed eigenvalue bounds for 3D domains with
+> optimal Crouzeix–Raviart error constant*.
 
 For a tetrahedron $K$ with diameter $h_K$, let $C(K)$ be the optimal constant in
 
