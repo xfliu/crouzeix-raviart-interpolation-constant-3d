@@ -2,3 +2,4 @@
 *.tmp*
 records/figures/
 records/reduction_example/figures/
+__pycache__/
