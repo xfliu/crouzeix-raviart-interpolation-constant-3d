@@ -2,7 +2,7 @@
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "a014592483e1793e16041d5e3ef8ae04f2031b69"
+project_hash = "abebdddbb76ab9a1273f5912cebe88e274346efb"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -97,12 +97,6 @@ version = "1.8.0"
 deps = ["StyledStrings"]
 uuid = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
 version = "1.12.0"
-
-[[deps.Kappa3LowerBound]]
-deps = ["IntervalArithmetic", "LinearAlgebra", "Printf"]
-path = "."
-uuid = "7b3c2a51-6f0e-4a8d-9c41-2e5d8b0f9a17"
-version = "0.1.0"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]

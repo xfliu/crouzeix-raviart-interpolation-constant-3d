@@ -82,7 +82,7 @@ KAPPA3_FAMILY=star KAPPA3_PARAMETERS=10,10,10 KAPPA3_LEVEL=5 \
   julia --project=code code/scripts/point_certificate.jl
 ```
 
-The output ends with `C(K) <= 0.1590973283688650...`. Level 5 takes from
+The output ends with `C(K) <= 0.15909732836886503`. Level 5 takes from
 about 20 seconds to a few minutes. For a quick test use `KAPPA3_LEVEL=3`,
 which gives the weaker bound `C(K) <= 0.16699...` in a few seconds.
 
